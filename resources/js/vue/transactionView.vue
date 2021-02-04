@@ -1,18 +1,18 @@
 <template>
   <div>
     <div class="transactionHeader" >
-    <div class="property"> Date </div>
-    <div class="property"> Type </div>
-    <div class="property"> Description </div>
-    <div class="property"> Amount </div>
-  </div>
-  <div v-for="(transaction, idx) in transactions" :key="idx">
-    <single-transaction
-      :transaction="transaction"
-      class="transaction"
-      v-on:transactionchanged="$emit('reloadTransactions')"
-    />
-  </div>
+      <div class="property"> Date </div>
+      <div class="property"> Type </div>
+      <div class="property"> Description </div>
+      <div class="property"> Amount </div>
+    </div>
+    <div v-for="(transaction, idx) in transactions" :key="idx">
+      <single-transaction
+        :transaction="transaction"
+        class="transaction"
+        v-on:transactionchanged="$emit('reloadTransactions')"
+      />
+    </div>
   </div>
 </template>
 
@@ -36,13 +36,18 @@ export default {
   }
 
   .transactionHeader {
-    margin-top: 5px;
+    margin-top: 15px;
     display: flex;
     justify-content: flex-start;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: steelblue;
+    color: white;
   }
   .property {
     flex: 1;
     padding: 10px;
+    font: white;
 
   }
 </style>
