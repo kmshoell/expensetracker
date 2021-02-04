@@ -1,16 +1,20 @@
 <template>
   <div class="singleTransaction" >
     <div class="property"> {{ transaction.created_at }} </div>
-    <div class="property"> {{ transaction.type }} </div>
-    <div class="property"> {{ transaction.description }} </div>
+    <div class="property">
+      <select v-model="transaction.type" @change="onChange($event, 'type')" required>
+        <option value="expense">Expense</option>
+        <option value="income">Income</option>
+      </select>
+    </div>
+    <div class="property">
+      <input v-model="transaction.description" @change="onChange($event, 'description')" required/>
+    </div>
     <div class="property amount">
       <div>
-        ${{ transaction.amount }}
+        <input v-model="transaction.amount" type="number" min=0 step=".01" name="amount" id="amount" @change="onChange($event, 'amount')" required />
       </div>
       <div>
-        <button @click="editTransaction()" class="edit">
-          <font-awesome-icon icon="edit" />
-        </button>
         <button @click="removeTransaction()" class="trashcan">
           <font-awesome-icon icon="trash" />
         </button>
@@ -23,6 +27,18 @@
 export default {
   props: ['transaction'],
   methods: {
+    onChange(event, prop) {
+      if(prop == 'type') this.transaction.type = event.target.value;
+      else if (prop == 'description') this.transaction.description = event.target.value;
+      else if (prop == 'amount') this.transaction.amount = event.target.value;
+      axios.put('api/items/' + this.transaction.id, this.transaction)
+      .then( response => {
+        if (response.status == 200){
+          this.$emit('transactionchanged');
+        }
+      })
+      .catch(error => console.log(error))
+    },
     editTransaction() {
       return;
     },
@@ -49,6 +65,17 @@ export default {
   .property {
     margin: 5px;
     flex: 1;
+  }
+
+  select {
+    padding: 5px;
+    width: 80%;
+    text-align: center;
+  }
+
+  input {
+    padding: 5px;
+    width: 80%;
   }
 
   .amount {
