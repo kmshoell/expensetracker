@@ -19,10 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/items', [ItemController::class, 'index']);
-Route::prefix('/item')->group( function () {
-    //?!is this best RESTful practice?
-    Route::post('/store', [ItemController::class, 'store']);
+//api routing
+Route::prefix('/items')->group( function () {
+    Route::get('', [ItemController::class, 'index']);
+    Route::post('', [ItemController::class, 'store']);
     Route::put('/{id}', [ItemController::class, 'update']);
     Route::delete('/{id}', [ItemController::class, 'destroy']);
 });

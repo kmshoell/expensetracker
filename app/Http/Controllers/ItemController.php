@@ -37,7 +37,9 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $newItem = new Item;
-        $newItem->name = $request->item["name"];
+        $newItem->type = $request->type;
+        $newItem->description = $request->description;
+        $newItem->amount = $request->amount;
         $newItem->save();
 
         return $newItem;
@@ -77,8 +79,9 @@ class ItemController extends Controller
         $existingItem = Item::find( $id );
 
         if($existingItem) {
-            $existingItem->completed = $request->item['completed'] ? true : false;
-            $existingItem->completed_at = $request->item['completed'] ? Carbon::now() : null;
+            $existingItem->type = $request->type;
+            $existingItem->description = $request->description;
+            $existingItem->amount = $request->amount;
             $existingItem->save();
             return $existingItem;
         }
@@ -97,7 +100,7 @@ class ItemController extends Controller
 
         if($existingItem) {
             $existingItem->delete();
-            return "Item successfully deleted.";
+            return "$existingItem->description successfully deleted.";
         }
         return "Item not found";
     }
