@@ -20,5 +20,8 @@
     },
     "dependencies": {
         "vue": "^2.6.12"
+    },
+    "engines": {
+        "node": "12.18"
     }
 }
